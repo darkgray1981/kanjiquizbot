@@ -1,0 +1,10 @@
+{
+	"description": "Test quiz with duplicates",
+	"type": "text",
+	"deck": [
+		{ "question": "q1", "answers": [ "aaa", "bbb" ], "comment": "c1" },
+		{ "question": "q1", "answers": [ "bbb" ], "comment": "c2" },
+		{ "question": "q1", "answers": [ "aaa" ], "comment": "c1" },
+		{ "question": "q2", "answers": [ "ccc", "ddd", "eee" ], "comment": "c3" }
+	]
+}
