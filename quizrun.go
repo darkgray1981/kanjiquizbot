@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -620,28 +619,9 @@ func runGauntlet(s *discordgo.Session, m *discordgo.MessageCreate, quizname, tim
 	quizChannel := m.ChannelID
 
 	// Only react in private messages
-	var retryErr error
-	for i := 0; i < 3; i++ {
-		var ch *discordgo.Channel
-		ch, retryErr = s.State.Channel(quizChannel)
-		if retryErr != nil {
-			if strings.HasPrefix(retryErr.Error(), "HTTP 5") {
-				// Wait and retry if Discord server related
-				time.Sleep(250 * time.Millisecond)
-				continue
-			} else {
-				break
-			}
-		} else if ch.Type&discordgo.ChannelTypeDM == 0 {
-			// Not a private channel
-			msgSend(s, quizChannel, fmt.Sprintf(UNICODE_NO_ENTRY_SIGN+" Game mode `%sgauntlet` is only for DM!", CMD_PREFIX))
-			return
-		}
-
-		break
-	}
-	if retryErr != nil {
-		log.Println("ERROR, With channel name check:", retryErr)
+	if len(m.GuildID) != 0 {
+		// Not a private channel
+		msgSend(s, quizChannel, fmt.Sprintf(UNICODE_NO_ENTRY_SIGN+" Game mode `%sgauntlet` is only for DM!", CMD_PREFIX))
 		return
 	}
 

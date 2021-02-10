@@ -124,6 +124,9 @@ func main() {
 		log.Fatalln("ERROR, Failed to create Discord session:", err)
 	}
 
+	// Enable all intents for now
+	session.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsAll)
+
 	// Open a websocket connection to Discord and begin listening
 	err = session.Open()
 	if err != nil {
@@ -220,7 +223,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			if len(input) >= 2 {
 				// Strip first space (in case it's Japanese)
 				query := string([]rune(m.Content[len(input[0]):])[1:])
-				sent, err = corpusSearch(s, m.ChannelID, query)
+				sent, err = corpusSearch(s, m, query)
 				if err != nil {
 					sent = msgSend(s, m.ChannelID, "Error: "+err.Error())
 				}
@@ -228,15 +231,15 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 				sent = msgSend(s, m.ChannelID, "No query term specified!")
 			}
 		case "ss":
-			timeoutLimit := 20
+			timeoutLimit := 30
 			if m.Author.ID == Settings.Owner.ID {
-				timeoutLimit = 90
+				timeoutLimit = 120
 			}
 
 			if len(input) >= 2 {
 				// Strip first space (in case it's Japanese)
 				query := string([]rune(m.Content[len(input[0]):])[1:])
-				sent, err = corpusSearchSpecial(s, m.ChannelID, query, timeoutLimit)
+				sent, err = corpusSearchSpecial(s, m, query, timeoutLimit)
 				if err != nil {
 					sent = msgSend(s, m.ChannelID, "Error: "+err.Error())
 				}
@@ -254,7 +257,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			}
 		case "currency", "c":
 			if len(input) >= 2 {
-				sent = msgSend(s, m.ChannelID, Currency(m.Content[len(input[0])+1:]))
+				sent = msgSend(s, m.ChannelID, Currency(m.Content[len(input[0])+1:], false))
 			}
 		case "unitconversion", "uc":
 			if len(input) >= 2 {
@@ -301,7 +304,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		case "flash", "mad", "fast", "mild", "slow", "qq":
 			fallthrough
 		case "quiz":
-			if !isBotChannel(s, m.ChannelID) {
+			if !isBotChannel(s, m) {
 				break
 			}
 			if len(input) == 2 {
@@ -315,7 +318,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 				sent = showList(s, m)
 			}
 		case "multi":
-			if !isBotChannel(s, m.ChannelID) {
+			if !isBotChannel(s, m) {
 				break
 			}
 			if len(input) == 2 {
@@ -327,7 +330,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 				sent = showList(s, m)
 			}
 		case "scramble":
-			if !isBotChannel(s, m.ChannelID) {
+			if !isBotChannel(s, m) {
 				break
 			}
 			if len(input) == 1 {
@@ -339,7 +342,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 				sent = showList(s, m)
 			}
 		case "gauntlet":
-			if !isBotChannel(s, m.ChannelID) {
+			if !isBotChannel(s, m) {
 				break
 			}
 			if len(input) == 2 {
@@ -470,7 +473,7 @@ func stopQuiz(s *discordgo.Session, quizChannel string) {
 		status = fmt.Sprintf("%d quizzes", count)
 	}
 
-	err := s.UpdateStatus(0, status)
+	err := s.UpdateGameStatus(0, status)
 	if err != nil {
 		log.Println("ERROR, Could not update status:", err)
 	}
@@ -498,7 +501,7 @@ func startQuiz(s *discordgo.Session, quizChannel string) (err error) {
 		status = fmt.Sprintf("%d quizzes", count)
 	}
 
-	err2 := s.UpdateStatus(0, status)
+	err2 := s.UpdateGameStatus(0, status)
 	if err2 != nil {
 		log.Println("ERROR, Could not update status:", err2)
 	}

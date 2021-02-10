@@ -317,13 +317,18 @@ func isBotCommand(s string) bool {
 }
 
 // Determine if given channel is for bot spam
-func isBotChannel(s *discordgo.Session, cid string) bool {
+func isBotChannel(s *discordgo.Session, m *discordgo.MessageCreate) bool {
 
-	// Only react on #bot* channels or private messages
+	// Allow if it's a DM
+	if len(m.GuildID) == 0 {
+		return true
+	}
+
+	// Otherwise only accept #bot* channels
 	var retryErr error
 	for i := 0; i < 3; i++ {
 		var ch *discordgo.Channel
-		ch, retryErr = s.State.Channel(cid)
+		ch, retryErr = s.State.Channel(m.ChannelID)
 		if retryErr != nil {
 			if strings.HasPrefix(retryErr.Error(), "HTTP 5") {
 				// Wait and retry if Discord server related
@@ -332,7 +337,7 @@ func isBotChannel(s *discordgo.Session, cid string) bool {
 			} else {
 				break
 			}
-		} else if !strings.HasPrefix(ch.Name, "bot") && ch.Type&discordgo.ChannelTypeDM == 0 {
+		} else if !strings.HasPrefix(ch.Name, "bot") {
 			return false
 		}
 
@@ -663,6 +668,8 @@ func checkCurrency(name string) string {
 // Format float in a human way
 func humanize(f float64) string {
 
+	f += 0.005
+
 	sign := ""
 	if f < 0 {
 		sign = "-"
@@ -672,7 +679,7 @@ func humanize(f float64) string {
 	n := uint64(f)
 
 	// Grab two rounded decimals
-	decimals := uint64((f+0.005)*100) % 100
+	decimals := uint64(f*100) % 100
 
 	var buf []byte
 
@@ -705,7 +712,7 @@ func humanize(f float64) string {
 }
 
 // Return Yahoo currency conversion
-func Currency(query string) string {
+func Currency(query string, isRetry bool) string {
 	yahoo := "https://query1.finance.yahoo.com/v10/finance/quoteSummary/"
 	yahooParams := "?formatted=true&modules=price&corsDomain=finance.yahoo.com"
 
@@ -727,6 +734,11 @@ func Currency(query string) string {
 	// Do query in both exchange directions in case it's too small for 4 decimals
 	queryUrl := yahoo + from + to + "=X" + yahooParams
 
+	// Ugly hack to handle crypto currencies
+	if isRetry {
+		queryUrl = yahoo + from + "-" + to + yahooParams
+	}
+
 	resp, err := http.Get(queryUrl)
 	if err != nil {
 		return "Error - " + err.Error()
@@ -740,6 +752,10 @@ func Currency(query string) string {
 
 	if resp.StatusCode != 200 {
 		if strings.Contains(string(data), "Quote not found for ticker symbol") {
+			if !isRetry {
+				return Currency(query, true)
+			}
+
 			return "Error - Currency not found"
 		}
 
@@ -763,7 +779,7 @@ func Currency(query string) string {
 }
 
 // Return frequency stats from corpus of novels
-func corpusSearch(s *discordgo.Session, cid string, query string) (sent *discordgo.Message, err error) {
+func corpusSearch(s *discordgo.Session, m *discordgo.MessageCreate, query string) (sent *discordgo.Message, err error) {
 
 	target := []byte(query)
 	sob := []byte("@@@[NOVEL_START=")
@@ -774,7 +790,7 @@ func corpusSearch(s *discordgo.Session, cid string, query string) (sent *discord
 
 	// Allow more examples in bot-spam channels and DM
 	examplesLimit := 2
-	if isBotChannel(s, cid) {
+	if isBotChannel(s, m) {
 		examplesLimit = 6
 	}
 
@@ -928,11 +944,11 @@ func corpusSearch(s *discordgo.Session, cid string, query string) (sent *discord
 		Description: truncate(exampleList, DISCORD_DESC_MAX),
 	}
 
-	return embedSend(s, cid, embed), nil
+	return embedSend(s, m.ChannelID, embed), nil
 }
 
 // Return frequency stats from corpus of novels with regular expression queries
-func corpusSearchSpecial(s *discordgo.Session, cid string, query string, timeout int) (sent *discordgo.Message, err error) {
+func corpusSearchSpecial(s *discordgo.Session, m *discordgo.MessageCreate, query string, timeout int) (sent *discordgo.Message, err error) {
 
 	sob := []byte("@@@[NOVEL_START=")
 	eob := []byte("@@@[NOVEL_END]@@@")
@@ -942,7 +958,7 @@ func corpusSearchSpecial(s *discordgo.Session, cid string, query string, timeout
 
 	// Allow more examples in bot-spam channels and DM
 	examplesLimit := 2
-	if isBotChannel(s, cid) {
+	if isBotChannel(s, m) {
 		examplesLimit = 6
 	}
 
@@ -1111,7 +1127,7 @@ func corpusSearchSpecial(s *discordgo.Session, cid string, query string, timeout
 		Footer:      &discordgo.MessageEmbedFooter{Text: fmt.Sprintf("Time taken: %.2f seconds", float64(time.Since(startTime))/float64(time.Second))},
 	}
 
-	return embedSend(s, cid, embed), nil
+	return embedSend(s, m.ChannelID, embed), nil
 }
 
 // Figure out current time in given location
@@ -1209,7 +1225,7 @@ func UnitConversion(query string) string {
 		result = fmt.Sprintf("**%s** km", humanize(value*MILE_IN_KM))
 	case "km":
 		result = fmt.Sprintf("**%s** mi", humanize(value/MILE_IN_KM))
-	case "oz":
+	case "oz", "ounce":
 		result = fmt.Sprintf("**%s** ml", humanize(value*OZ_IN_ML))
 	case "ml":
 		result = fmt.Sprintf("**%s** oz", humanize(value/OZ_IN_ML))
