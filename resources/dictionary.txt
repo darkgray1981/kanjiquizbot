@@ -1791,6 +1791,7 @@ cheap
 cheaply
 cheapness
 cheat
+cheater
 check
 checklist
 checkup
@@ -2821,6 +2822,7 @@ deafen
 deafening
 deal
 dealer
+dealership
 dealing
 dean
 dear
@@ -7009,6 +7011,7 @@ mischief
 mischievous
 misconception
 misconduct
+miscredit
 misdemeanor
 misdirect
 miser
@@ -8921,6 +8924,7 @@ rascal
 rash
 rasp
 raspberry
+raspy
 rat
 ratchet
 rate
@@ -9273,6 +9277,7 @@ rescind
 rescue
 research
 researcher
+reseat
 resell
 resemblance
 resemble
@@ -9746,6 +9751,7 @@ scurry
 scuttle
 sea
 seafood
+seahorse
 seal
 seam
 seaman
@@ -11087,7 +11093,9 @@ teamwork
 teapot
 tear
 tearful
+tearing
 tease
+teaser
 teaspoon
 teaspoonful
 tech

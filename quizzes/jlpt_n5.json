@@ -325,7 +325,6 @@
 	{ "question": "自転車", "answers": [ "じてんしゃ" ], "comment": "bicycle" },
 	{ "question": "色", "answers": [ "いろ" ], "comment": "colour; color\ncomplexion\nappearance; look\nlove; lust; sensuality; love affair; lover\nkind; type; variety\ncounter for colours\nrupa (form)\nvisible objects (i.e. color and form)" },
 	{ "question": "花", "answers": [ "はな" ], "comment": "flower; blossom; bloom; petal\ncherry blossom\nbeauty\nblooming (esp. of cherry blossoms)\nikebana\nJapanese playing cards\n(the) best" },
-	{ "question": "花瓶", "answers": [ "かびん" ], "comment": "(flower) vase\nvase used to hold flower offerings (often made of gilded copper)" },
 	{ "question": "若い", "answers": [ "わかい" ], "comment": "young; youthful\nimmature; green\nlow (number); small" },
 	{ "question": "英語", "answers": [ "えいご" ], "comment": "English (language)" },
 	{ "question": "茶色", "answers": [ "ちゃいろ" ], "comment": "light brown; tawny" },

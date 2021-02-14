@@ -796,7 +796,7 @@
 	{ "question": "謳歌", "answers": [ "おうか" ], "comment": "rejoicing; glorification; exultation; celebration; enjoyment; singing praises" },
 	{ "question": "譫言", "answers": [ "うわごと" ], "comment": "talking in delirium; incoherent muttering\nnonsense; bullshit; silly things; joke" },
 	{ "question": "象る", "answers": [ "かたどる" ], "comment": "to model on; to make in the shape of; to represent; to pattern after; to imitate\nto symbolise" },
-	{ "question": "豪酒", "answers": [ "ごうしゅ" ] },
+	{ "question": "豪酒", "answers": [ "ごうしゅ" ], "comment": "heavy [hard] drinking" },
 	{ "question": "豹変", "answers": [ "ひょうへん" ], "comment": "sudden change; complete change" },
 	{ "question": "貫禄", "answers": [ "かんろく" ], "comment": "presence; dignity" },
 	{ "question": "貰う", "answers": [ "もらう" ], "comment": "to receive; to take; to accept\nto get somebody to do something" },
@@ -1051,8 +1051,19 @@
 	{ "question": "頻りに", "answers": [ "しきりに" ], "comment": "frequently; repeatedly; often; incessantly; constantly\nstrongly; eagerly" },
 	{ "question": "真似", "answers": [ "まね" ], "comment": "imitating; copying; mimicry\nbehavior; behaviour; action; conduct" },
 	{ "question": "真似る", "answers": [ "まねる" ], "comment": "to mimic; to imitate" },
-	{ "question": "出で立ち", "answers": [ "いでたち" ], "comment": "to mimic; to imitate" },
+	{ "question": "出で立ち", "answers": [ "いでたち" ], "comment": "dress; outfit" },
+	{ "question": "遣り通す", "answers": [ "やりとおす" ], "comment": "to carry through; to achieve; to complete" },
+	{ "question": "遣る", "answers": [ "やる" ], "comment": "to do; to undertake; to perform; to play (a game); to study\nto send; to dispatch; to despatch\nto put; to move; to turn (one's head, glance, etc.)\nto give (esp. to someone of equal or lower status); to let have; to present; to bestow; to confer\nto make (a vehicle) go faster\nto run (a business); to keep; to be engaged in; to practice (law, medicine, etc.); to practise\nto have (food, drink, etc.); to eat; to drink; to smoke\nto hold (a performance); to perform; to show\nto ease (one's mind)\nto harm; to injure; to kill\nto have sex with\nto live; to get by; to get along\nto do ... completely\nto do ... broadly; to do ... to a great distance\nto do ... for (someone of equal or lower status); to do ... to (sometimes with negative nuance)\nto make active efforts to ..." },
+	{ "question": "束の間", "answers": [ "つかのま" ], "comment": "moment; brief time; brief; transient" },
+	{ "question": "咽ぶ", "answers": [ "むせぶ" ], "comment": "to be choked; to be stifled; to be smothered" },
+	{ "question": "栄華", "answers": [ "えいが" ], "comment": "glory; splendour; splendor; majesty; luxury" },
+	{ "question": "料簡", "answers": [ "りょうけん" ], "comment": "idea; thought; intention; design; inclination; decision; motive\ndiscretion\nforgiveness; toleration" },
+	{ "question": "困憊", "answers": [ "こんぱい" ], "comment": "exhaustion; fatigue" },
+	{ "question": "柔和", "answers": [ "にゅうわ" ], "comment": "gentle; mild; meek; tender" },
+	{ "question": "拐かす", "answers": [ "かどわかす" ], "comment": "to kidnap" },
+	{ "question": "敷衍", "answers": [ "ふえん" ], "comment": "expatiation; amplification (upon); elaboration" },
+	{ "question": "知悉", "answers": [ "ちしつ" ], "comment": "complete knowledge" },
+	{ "question": "喫緊", "answers": [ "きっきん" ], "comment": "urgent; pressing; exigent" },
 	{ "question": "菩薩", "answers": [ "ぼさつ" ], "comment": "bodhisattva; one who has reached enlightenment but vows to save all beings before becoming a buddha\nHigh Monk (title bestowed by the imperial court)\ntitle bestowed to Shinto kami in manifestation theory" }
 ]
 }
-

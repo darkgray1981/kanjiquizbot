@@ -2618,7 +2618,7 @@
 	{ "question": "盗掘", "answers": [ "とうくつ" ], "comment": "illegal digging; illegal mining; grave robbing; tomb robbing" },
 	{ "question": "盗用", "answers": [ "とうよう" ], "comment": "embezzlement; fraudulent use; plagiarism" },
 	{ "question": "盗賊", "answers": [ "とうぞく" ], "comment": "thief; robber; burglar; bandit" },
-	{ "question": "盛る", "answers": [ "さかる" ], "comment": "to prosper; to flourish\nto copulate (animals)\nto serve (food, etc.); to dish out\nto fill up; to pile up; to heap\nto prescribe; to administer; to dose out\nto put into (e.g. information in a report)\nto mark out (e.g. scale); to graduate (e.g. thermometer)\nto exaggerate; to apply heavy makeup" },
+	{ "question": "盛る", "answers": [ "さかる", "もる" ], "comment": "to prosper; to flourish\nto copulate (animals)\nto serve (food, etc.); to dish out\nto fill up; to pile up; to heap\nto prescribe; to administer; to dose out\nto put into (e.g. information in a report)\nto mark out (e.g. scale); to graduate (e.g. thermometer)\nto exaggerate; to apply heavy makeup" },
 	{ "question": "盟友", "answers": [ "めいゆう" ], "comment": "sworn friend" },
 	{ "question": "監査", "answers": [ "かんさ" ], "comment": "inspection; audit; judgement; judgment" },
 	{ "question": "監禁", "answers": [ "かんきん" ], "comment": "confinement" },

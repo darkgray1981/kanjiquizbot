@@ -3361,7 +3361,7 @@
 	{ "question": "燭台", "answers": [ "しょくだい" ], "comment": "【準１級】\ncandlestick; candlestand" },
 	{ "question": "燻", "answers": [ "いぶし" ], "comment": "【１級】" },
 	{ "question": "燻す", "answers": [ "いぶす" ], "comment": "【１級】\nto smoke (something); to fumigate\nto oxidize; to oxidise" },
-	{ "question": "燻る", "answers": [ "くすぶる" ], "comment": "【１級】\nto smoke; to smoulder; to smolder; to sputter\nto be sooty; to be smoke-stained\nto smoulder (e.g. a dispute); to smolder\nto seclude oneself\nto live in obscurity; to stay in the same level (of social position, circumstances, etc.)" },
+	{ "question": "燻る", "answers": [ "いぶる", "くすぶる", "ふすぶる", "くゆる" ], "comment": "【１級】\nto smoke; to smoulder; to smolder; to sputter\nto be sooty; to be smoke-stained\nto smoulder (e.g. a dispute); to smolder\nto seclude oneself\nto live in obscurity; to stay in the same level (of social position, circumstances, etc.)" },
 	{ "question": "燻煙", "answers": [ "くんえん" ], "comment": "【１級】\nsmoking (esp. as a means of preserving food)" },
 	{ "question": "燻蒸", "answers": [ "くんじょう" ], "comment": "【１級】\nfumigation; smoking (out)" },
 	{ "question": "燻銀", "answers": [ "いぶしぎん" ], "comment": "【１級】" },
