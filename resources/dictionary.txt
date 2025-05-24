@@ -530,6 +530,7 @@ antiseptic
 antithesis
 antler
 antonym
+antsy
 anvil
 anxiety
 anxious
@@ -8916,6 +8917,7 @@ rapier
 rapport
 rapprochement
 rapt
+raptor
 rapture
 rare
 rarely
