@@ -713,8 +713,8 @@ func humanize(f float64) string {
 
 // Return Yahoo currency conversion
 func Currency(query string, isRetry bool) string {
-	yahoo := "https://query1.finance.yahoo.com/v10/finance/quoteSummary/"
-	yahooParams := "?formatted=true&modules=price&corsDomain=finance.yahoo.com"
+	yahoo := "https://query1.finance.yahoo.com/v8/finance/chart/"
+	yahooParams := "?corsDomain=finance.yahoo.com"
 
 	parts := strings.Split(strings.TrimSpace(query), " ")
 	if len(parts) != 4 {
@@ -739,7 +739,14 @@ func Currency(query string, isRetry bool) string {
 		queryUrl = yahoo + from + "-" + to + yahooParams
 	}
 
-	resp, err := http.Get(queryUrl)
+	req, err := http.NewRequest("GET", queryUrl, nil)
+	if err != nil {
+		return "Error - " + err.Error()
+	}
+
+	req.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return "Error - " + err.Error()
 	}
@@ -751,7 +758,7 @@ func Currency(query string, isRetry bool) string {
 	}
 
 	if resp.StatusCode != 200 {
-		if strings.Contains(string(data), "Quote not found for ticker symbol") {
+		if strings.Contains(string(data), "symbol may be delisted") {
 			if !isRetry {
 				return Currency(query, true)
 			}
@@ -763,7 +770,7 @@ func Currency(query string, isRetry bool) string {
 		return "Error - Something went wrong"
 	}
 
-	re := regexp.MustCompile(`"regularMarketPrice":{"raw":(.+?),"fmt":`)
+	re := regexp.MustCompile(`"regularMarketPrice":(.+?),"`)
 	matched := re.FindStringSubmatch(string(data))
 
 	if len(matched) != 2 {
